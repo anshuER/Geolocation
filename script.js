@@ -111,6 +111,10 @@ class App {
     }).addTo(this.#map);
 
     this.#map.on('click', this._showForm.bind(this));
+    this.#workouts.forEach(workout => {
+      this._renderWorkout(workout);
+      this._renderWorkoutMarker(workout);
+    });
   }
 
   _showForm(mapE) {
@@ -301,10 +305,15 @@ class App {
     if (!data) return;
 
     this.#workouts = data;
-    this.#workouts.forEach(workout => {
-      this._renderWorkout(workout);
-    });
+  }
+
+  reset() {
+    localStorage.removeItem('workouts');
+    location.reload();
   }
 }
 
 const app = new App();
+// from getting localstorage prototype chain is lost
+// here workoutClick should be disabled
+// run app.reset()
